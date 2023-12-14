@@ -5,7 +5,9 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqlBackupToS3", "src\SqlBackupToS3\SqlBackupToS3.csproj", "{9DD8E05F-79C0-48F6-9B1B-9B275D64048A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "samples\ConsoleApp1\ConsoleApp1.csproj", "{E17F6800-4F90-4126-8003-F48DC6BB8F70}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{0DD3ADEC-10CF-41A8-8C19-31C5A86F1DC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Api", "samples\Sample.Api\Sample.Api.csproj", "{9EF2E678-F68E-4924-BBC7-ED3B91628CC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,13 +19,16 @@ Global
 		{9DD8E05F-79C0-48F6-9B1B-9B275D64048A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DD8E05F-79C0-48F6-9B1B-9B275D64048A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DD8E05F-79C0-48F6-9B1B-9B275D64048A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E17F6800-4F90-4126-8003-F48DC6BB8F70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E17F6800-4F90-4126-8003-F48DC6BB8F70}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E17F6800-4F90-4126-8003-F48DC6BB8F70}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E17F6800-4F90-4126-8003-F48DC6BB8F70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EF2E678-F68E-4924-BBC7-ED3B91628CC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EF2E678-F68E-4924-BBC7-ED3B91628CC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EF2E678-F68E-4924-BBC7-ED3B91628CC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EF2E678-F68E-4924-BBC7-ED3B91628CC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9EF2E678-F68E-4924-BBC7-ED3B91628CC2} = {0DD3ADEC-10CF-41A8-8C19-31C5A86F1DC5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DD0DFD6C-CB07-4B8F-877F-C9FFF3939BFF}
