@@ -1,4 +1,4 @@
-# Sql Backup to S3
+# Sql Backup to Amazon S3
 #### Backup the database, zip it and upload it to s3.
 
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/byerlikaya/SqlBackupToS3/dotnet.yml)
