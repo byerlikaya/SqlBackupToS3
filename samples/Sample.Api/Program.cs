@@ -8,8 +8,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSqlBackup(x =>
 {
     x.ConnectionString = builder.Configuration.GetConnectionString("SqlServerConnection");
-    x.FolderPath = @"D:\Backup";
+    x.BackupFolderPath = @"D:\Backup";
     x.DailyRepeat = 2;
+    x.AmazonCredentialOptions = builder.Configuration.GetSection(nameof(AmazonCredentialOptions)).Get<AmazonCredentialOptions>();
+    x.AmazonS3Options = builder.Configuration.GetSection(nameof(AmazonS3Options)).Get<AmazonS3Options>();
+    x.DeleteAfterZip = true;
+    x.DebugMode = true;
 });
 
 var app = builder.Build();
