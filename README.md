@@ -5,7 +5,7 @@
 [![SqlBackupToS3 Nuget](https://img.shields.io/nuget/v/SqlBackupToS3)](https://www.nuget.org/packages/SqlBackupToS3)
 [![SqlBackupToS3 Nuget](https://img.shields.io/nuget/dt/SqlBackupToS3)](https://www.nuget.org/packages/SqlBackupToS3)
 
-Setup in just 3 steps.
+Setup in just 2 steps.
 
 1. Install **SqlBackupToS3** NuGet package from [here](https://www.nuget.org/packages/SqlBackupToS3/).
 
@@ -19,21 +19,23 @@ PM> Install-Package SqlBackupToS3
 builder.Services.AddSqlBackup(x =>
 {
     x.ConnectionString = "YOUR_CONNECTION_STRING";
-    x.FolderPath = "BACKUP_FOLDER_PATH";
+    x.BackupFolderPath = "BACKUP_FOLDER_PATH";
     x.DailyRepeat = 2;
+    x.DeleteAfterZip = true;
+    x.DebugMode = true;
+    x.AmazonCredentialOptions = new AmazonCredentialOptions
+    {
+        AccessKey = "YOUR_ACCESS_KEY",
+        SecretKey = "YOUR_SECRET_KEY"
+    };
+    x.AmazonS3Options = new AmazonS3Options
+    {
+        BucketName = "YOUR_BUCKET_NAME",
+        Region = "eu-central-1"
+    };
 });
 ```
-3. Add the necessary information to the `appsettings.json` file.
 
-```json
- "AmazonCredentialOptions": {
-    "AccessKey": "",
-    "SecretKey": ""
-  },
+`DebugMode` : Database backups on the remote server will give an error because the specified backup file cannot be found on your local computer. If you are not working on the local database, you should set it to "true". In short, it should be set to "false" if it is an application running on the same server as the database being backed up.
 
-  "AmazonS3Options": {
-    "BucketName": "",
-    "Region": "eu-central-1"
-  }
-```
 Give a star ⭐, fork and stay tuned.
