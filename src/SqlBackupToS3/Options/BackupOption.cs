@@ -1,12 +1,12 @@
 ﻿namespace SqlBackupToS3.Options;
 
-public class SqlBackupOption
+public class BackupOption
 {
     private int _dailyRepeat;
 
-    public string FolderPath { get; set; }
-
     public string ConnectionString { get; set; }
+
+    public string BackupFolderPath { get; set; }
 
     public int DailyRepeat
     {
@@ -23,4 +23,13 @@ public class SqlBackupOption
                 _ => value
             };
     }
+
+    public bool DeleteAfterZip { get; set; }
+
+    public bool DebugMode { get; set; }
+
+    public AmazonCredentialOptions AmazonCredentialOptions { get; set; }
+
+    public AmazonS3Options AmazonS3Options { get; set; }
+
 }

@@ -2,18 +2,18 @@
 
 public class BackupBackgroundService(
     IServiceProvider serviceProvider,
-    SqlBackupOption options,
+    BackupOption options,
     ILogger<BackupBackgroundService> logger) : BackgroundService
 {
     private DateTime _nextRunTime = DateTime.UtcNow;
 
-    public override async Task StartAsync(CancellationToken cancellationToken)
+    public override Task StartAsync(CancellationToken cancellationToken)
     {
         logger.LogInformation("Backup Background Service is starting.");
 
-        await RunBackup();
+        RunBackup();
 
-        await base.StartAsync(cancellationToken);
+        return base.StartAsync(cancellationToken);
     }
 
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
@@ -26,7 +26,7 @@ public class BackupBackgroundService(
 
                 await Task.Delay(GetDelayTime(), cancellationToken);
 
-                await RunBackup();
+                RunBackup();
 
                 _nextRunTime = GetNextDate();
             }
@@ -37,20 +37,14 @@ public class BackupBackgroundService(
         }
     }
 
-    private async Task RunBackup()
+    private void RunBackup()
     {
+        if (options.DebugMode)
+            return;
+
         using var scope = serviceProvider.CreateScope();
-        var sqlTool = scope.ServiceProvider.GetRequiredService<SqlTool>();
-        var zipArchiveTool = scope.ServiceProvider.GetRequiredService<ZipArchiveTool>();
-        var amazonS3Service = scope.ServiceProvider.GetRequiredService<IAmazonS3Service>();
-
-        var fileName = sqlTool.BackupFile();
-        var zipFilePath = zipArchiveTool.MakeZipFileAndDelete(fileName);
-
-        await amazonS3Service.UploadAsync(new UploadRequest
-        {
-            FilePath = zipFilePath
-        });
+        var sqlBackup = scope.ServiceProvider.GetRequiredService<SqlBackup>();
+        sqlBackup.BackupAndZipUploadToS3();
     }
 
     public override Task StopAsync(CancellationToken cancellationToken)

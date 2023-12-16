@@ -1,21 +1,18 @@
 ﻿namespace SqlBackupToS3.Utilities;
 
-internal class ZipArchiveTool
+internal class ZipArchiveTool(BackupOption backupOption)
 {
-    public string MakeZipFile(string filePath) => Archive(filePath);
-
-    public string MakeZipFileAndDelete(string filePath)
+    public void MakeZipFile(string filePath)
     {
-        var zipFilePath = Archive(filePath);
-        File.Delete(filePath);
-        return zipFilePath;
+        Archive(filePath);
+        if (backupOption.DeleteAfterZip)
+            File.Delete(filePath);
     }
 
-    private string Archive(string filePath)
+    private static void Archive(string filePath)
     {
-        var zipFilePath = $"{filePath}.zip";
+        var zipFilePath = filePath.CreateFilePathForZip();
         using var archive = ZipFile.Open(zipFilePath, ZipArchiveMode.Create);
         archive.CreateEntryFromFile(filePath, Path.GetFileName(filePath));
-        return zipFilePath;
     }
 }

@@ -4,28 +4,27 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddSqlBackup(
         this IServiceCollection services,
-        Action<SqlBackupOption> options)
+        Action<BackupOption> options)
     {
         ArgumentNullControl(services, options);
 
-        SingletonServices(services, options);
-
-        //https://github.com/byerlikaya/AmazonWebServices
-        services.AddAmazonWebServices();
+        DefineServices(services, options);
 
         return services;
     }
 
-    private static void SingletonServices(
+    private static void DefineServices(
         IServiceCollection services,
-        Action<SqlBackupOption> options)
+        Action<BackupOption> options)
     {
-        services.AddSingleton<SqlTool>();
-        services.AddSingleton<ZipArchiveTool>();
+        //Details => https://github.com/byerlikaya/AmazonWebServices
+        services.AddAmazonWebServices();
+
+        services.AddScoped<SqlBackup>();
 
         services.AddSingleton(_ =>
         {
-            var optionInstance = new SqlBackupOption();
+            var optionInstance = new BackupOption();
             options(optionInstance);
             return optionInstance;
         });
@@ -35,7 +34,7 @@ public static class ServiceCollectionExtensions
 
     private static void ArgumentNullControl(
         IServiceCollection services,
-        Action<SqlBackupOption> options)
+        Action<BackupOption> options)
     {
         if (services is null) throw new ArgumentNullException(nameof(services));
         if (options is null) throw new ArgumentNullException(nameof(options));
