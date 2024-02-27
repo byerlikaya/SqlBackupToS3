@@ -13,7 +13,7 @@ builder.Services.AddSqlBackup(x =>
     x.AmazonCredentialOptions = builder.Configuration.GetSection(nameof(AmazonCredentialOptions)).Get<AmazonCredentialOptions>();
     x.AmazonS3Options = builder.Configuration.GetSection(nameof(AmazonS3Options)).Get<AmazonS3Options>();
     x.DeleteAfterZip = true;
-    x.DebugMode = true;
+    x.DebugMode = false;
 });
 
 var app = builder.Build();
