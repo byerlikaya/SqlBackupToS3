@@ -2,6 +2,40 @@
 
 internal class SqlBackup(IAmazonS3Service amazonS3Service, BackupOption backupOption)
 {
+    public void BackupAndZipUploadToS3V1()
+    {
+        var sqlConnectionString = GetSqlConnectionString();
+
+        var backupName = sqlConnectionString.InitialCatalog.CreateBackupName();
+
+        var filePath = backupName.CreateFilePathForBackup(backupOption.BackupFolderPath);
+
+        var backupQuery = $"BACKUP DATABASE {sqlConnectionString.InitialCatalog} TO DISK='{filePath}'";
+
+
+        using SqlConnection connection = new(sqlConnectionString.ConnectionString);
+
+        SqlCommand command = new(backupQuery, connection);
+
+        connection.Open();
+
+        command.ExecuteNonQuery();
+
+        connection.Close();
+
+        var zipArchiveTool = new ZipArchiveTool(backupOption);
+        zipArchiveTool.MakeZipFile(filePath);
+
+        var zipFilePath = filePath.CreateFilePathForZip();
+
+        amazonS3Service.UploadExternalAwsAsync(new UploadExternalAwsRequest
+        {
+            FilePath = zipFilePath,
+            AmazonS3Options = backupOption.AmazonS3Options,
+            AmazonCredentialOptions = backupOption.AmazonCredentialOptions
+        });
+    }
+
     public void BackupAndZipUploadToS3()
     {
         var server = CreateServer();
@@ -10,6 +44,7 @@ internal class SqlBackup(IAmazonS3Service amazonS3Service, BackupOption backupOp
 
         backup.SqlBackupAsync(server);
     }
+
     private Server CreateServer() =>
         new(new ServerConnection { ConnectionString = GetSqlConnectionString().ConnectionString });
 

@@ -44,7 +44,7 @@ public class BackupBackgroundService(
 
         using var scope = serviceProvider.CreateScope();
         var sqlBackup = scope.ServiceProvider.GetRequiredService<SqlBackup>();
-        sqlBackup.BackupAndZipUploadToS3();
+        sqlBackup.BackupAndZipUploadToS3V1();
     }
 
     public override Task StopAsync(CancellationToken cancellationToken)
