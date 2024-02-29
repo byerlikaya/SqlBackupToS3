@@ -22,7 +22,8 @@ builder.Services.AddSqlBackup(x =>
     x.BackupFolderPath = "BACKUP_FOLDER_PATH";
     x.DailyRepeat = 2;
     x.DeleteAfterZip = true;
-    x.DebugMode = true;
+    x.DebugMode = false;
+    x.BackupOnStartup = false;
     x.AmazonCredentialOptions = new AmazonCredentialOptions
     {
         AccessKey = "YOUR_ACCESS_KEY",
