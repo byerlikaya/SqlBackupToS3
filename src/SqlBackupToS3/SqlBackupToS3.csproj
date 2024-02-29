@@ -7,13 +7,13 @@
 
   <PropertyGroup>
     <PackageId>SqlBackupToS3</PackageId>
-    <Version>2.0.1</Version>
+    <Version>2.1.0</Version>
     <Authors>Barış Yerlikaya</Authors>
     <Company>Barış Yerlikaya</Company>
     <Product>SqlBackupToS3</Product>
     <Title>Sql Backup to Amazon S3</Title>
     <Description>It backs up the MSSQL database you specify, compresses it into zip and backs it up to aws s3.</Description>
-    <Copyright>Copyright (c) 2023 Barış Yerlikaya</Copyright>
+    <Copyright>Copyright (c) 2024 Barış Yerlikaya</Copyright>
     <PackageProjectUrl>https://github.com/byerlikaya/SqlBackupToS3</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/byerlikaya/SqlBackupToS3</RepositoryUrl>

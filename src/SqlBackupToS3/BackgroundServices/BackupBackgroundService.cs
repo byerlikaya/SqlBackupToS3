@@ -42,6 +42,9 @@ public class BackupBackgroundService(
         if (options.DebugMode)
             return;
 
+        if (!options.BackupOnStartup)
+            return;
+
         using var scope = serviceProvider.CreateScope();
         var sqlBackup = scope.ServiceProvider.GetRequiredService<SqlBackup>();
         sqlBackup.BackupAndZipUploadToS3V1();

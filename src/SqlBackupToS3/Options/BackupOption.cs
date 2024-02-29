@@ -26,6 +26,8 @@ public class BackupOption
 
     public bool DeleteAfterZip { get; set; }
 
+    public bool BackupOnStartup { get; set; }
+
     public bool DebugMode { get; set; }
 
     public AmazonCredentialOptions AmazonCredentialOptions { get; set; }
