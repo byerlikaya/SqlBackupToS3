@@ -11,7 +11,8 @@ public class BackupBackgroundService(
     {
         logger.LogInformation("Backup Background Service is starting.");
 
-        RunBackup();
+        if (options.BackupOnStartup)
+            RunBackup();
 
         return base.StartAsync(cancellationToken);
     }
@@ -40,9 +41,6 @@ public class BackupBackgroundService(
     private void RunBackup()
     {
         if (options.DebugMode)
-            return;
-
-        if (!options.BackupOnStartup)
             return;
 
         using var scope = serviceProvider.CreateScope();
